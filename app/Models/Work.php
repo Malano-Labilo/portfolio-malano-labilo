@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Work extends Model
 {
     protected $fillable = ['title', 'slug', 'author' ];
-    // protected $with = ['user', 'category'];
+    protected $with = ['user', 'category'];
 
     public function user(): BelongsTo{
         return $this->belongsTo(User::class);

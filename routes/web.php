@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardWorkController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ProfileController;
@@ -19,16 +20,12 @@ Route::get('/works', [WorkController::class, 'index'])->name('works');
 Route::get('/all-works', [WorkController::class, 'works'])->name('works.all');
 Route::get('/works/{work:slug}', [WorkController::class, 'work'])->name('works.work');
 
-// Route::get('/all-works?creator={user:username}', [WorkController::class, 'users'])->name('works.user');
-// Route::get('/all-works?category={category:slug}', [CategoryController::class, 'show'])->name('works.category');
-
 //Halaman Contact
 Route::get('/contact', function(){
     return view('pages.contact');
 })->name('contact');
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', [DashboardWorkController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Support\Str;
@@ -28,10 +29,27 @@ class WorkController extends Controller
     }
 
     //halaman Show All Works atau menampilkan semua project
-    public function works(){
-        $works = Work::latest()->filter(request(['searching', 'category', 'creator']))->paginate(10)->withQueryString();
+    public function works(Request $request){
+        $works = Work::latest()->filter($request->only(['searching', 'category', 'creator']))->paginate(10)->withQueryString();
+        // $work = Work::with('category')->latest()->first();
+        //Nilai default dari title
+        $title = 'All Projects';
+
+        //Jika query string ?category=
+        if($request->filled('category')){
+            $firstTitle = 'Projects By Category';
+            $title = Category::where('slug', $request->category)->value('name'); //hanya ambil kolom name
+        }
+        //Jika query string ?user=
+        if($request->filled('creator')){
+            $firstTitle = 'Projects By Creator';
+            $title =  User::where('username', $request->creator)->value('username'); //hanya ambil kolom username
+        }
+
+
         return view('pages.works.show', [
-            'title' => "All Projects",
+            'firstTitle' => $firstTitle,
+            'title' =>$title,
             'show' => $works
         ]);
     }

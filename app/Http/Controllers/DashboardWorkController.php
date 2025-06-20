@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Work;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardWorkController extends Controller
 {
@@ -12,7 +13,13 @@ class DashboardWorkController extends Controller
      */
     public function index()
     {
-        return view('dashboard', ['works' => Work::latest()->paginate(8)]);
+        $works = Work::latest()->where('user_id', Auth::user()->id);
+
+        if (request('keyword')){
+            $works->where('title', 'like', '%' . request('keyword') . '%');
+        }
+        
+        return view('dashboard.index', ['works' => $works->paginate(8)->withQueryString()]);
     }
 
     /**
@@ -20,7 +27,7 @@ class DashboardWorkController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.create');
     }
 
     /**
@@ -34,9 +41,11 @@ class DashboardWorkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Work $work)
     {
-        //
+        return view('dashboard.show', [
+            'work' => $work
+        ]);
     }
 
     /**

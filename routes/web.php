@@ -7,12 +7,16 @@ use App\Http\Controllers\ProfileController;
 
 //Halaman Home
 Route::get('/', function () {
-    return view('pages.home');
+    return view('pages.home',[
+        'title' => 'Home',
+    ]);
 })->name('home');
 
 //Halaman About
 Route::get('/about', function(){
-    return view('pages.about');
+    return view('pages.about',[
+        'title' => 'About',
+    ]);
 })->name('about');
 
 Route::get('/works', [WorkController::class, 'index'])->name('works');
@@ -26,6 +30,8 @@ Route::get('/contact', function(){
 })->name('contact');
 
 Route::get('/dashboard', [DashboardWorkController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard/create', [DashboardWorkController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.work.create');
+Route::get('/dashboard/{work:slug}', [DashboardWorkController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.work');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

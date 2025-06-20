@@ -1,7 +1,10 @@
 <section class="flex justify-center ">
     <div class="container px-[12px] py-[72px]">
         <div class="mt-[32px] flex flex-col items-center gap-[32px]">
-            <h3 class="capitalize text-[24px] font-spaceGrotesk font-[600]">{{ $title }}</h3>
+            <div class="flex flex-col items-center font-[600]">
+                <span class="text-">{{ $firstTitle }}</span>
+                <h3 class="capitalize text-[24px] font-spaceGrotesk font-[600]">{{ $title }}</h3>
+            </div>
             <form class="w-full flex justify-center">
                 @if (request('category'))
                     <input type="hidden" name="category" value="{{ request('category') }}">

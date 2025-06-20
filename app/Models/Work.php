@@ -36,7 +36,6 @@ class Work extends Model
                 $query->where('username', $creator);
             } );
         });
-
     }
 
 }

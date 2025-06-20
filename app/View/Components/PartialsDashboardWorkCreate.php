@@ -6,18 +6,14 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class PartialsWorksShowWorks extends Component
+class PartialsDashboardWorkCreate extends Component
 {
     /**
      * Create a new component instance.
      */
-    public $show, $title, $firstTitle;
-
-    public function __construct($show = [], $title = "", $firstTitle)
+    public function __construct()
     {
-        $this->show = $show;
-        $this->title = $title;
-        $this->firstTitle = $firstTitle;
+        //
     }
 
     /**
@@ -25,6 +21,6 @@ class PartialsWorksShowWorks extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.partials.works.show-works');
+        return view('components.partials.dashboard.work-create');
     }
 }

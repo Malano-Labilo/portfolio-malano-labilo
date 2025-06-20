@@ -6,17 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('works', function (Blueprint $table) {
             $table->id();
             $table->string('title')->unique(); //Judul dari project
             $table->string('slug'); //Alamat dari Project yang akan ditampilkan di URL
-            // $table->unsignedBigInteger('user_id');
-            // $table->foreign('user_id')->references('id')->on('users');
             $table->foreignId('user_id')->constrained(  //Foreign key ke tabel Users
                 table: 'users', indexName: 'works_user_id'
             );

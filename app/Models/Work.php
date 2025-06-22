@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Work extends Model
 {
-    protected $fillable = ['title', 'slug', 'author' ];
+    protected $fillable = ['title', 'slug', 'user_id', 'category_id', 'thumbnail', 'excerpt', 'link', 'has_page', 'description', 'published_at'];
+    protected $casts = ['has_page' => 'boolean']; // Otomatis ubah nilai 0/1 ↔ false/true
     protected $with = ['user', 'category'];
 
     public function user(): BelongsTo{

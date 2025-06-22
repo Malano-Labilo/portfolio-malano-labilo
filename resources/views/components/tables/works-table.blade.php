@@ -1,6 +1,6 @@
 <section class="bg-gray-50  p-3 sm:p-5 font-aleo antialiased">
     <div class="mx-auto max-w-screen-xl">
-        <div class="bg-white-first  relative shadow-md sm:rounded-lg overflow-hidden">
+        <div class="bg-white-first flex flex-col gap-[24px] relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 ">
                 <div class="w-full md:w-1/2">
                     <form class="flex items-center" action="" method="GET">
@@ -47,6 +47,7 @@
                             <th scope="col" class="px-4 py-3">Link</th>
                             <th scope="col" class="px-4 py-3">Has Page Or Not</th>
                             <th scope="col" class="px-4 py-3">Description</th>
+                            <th scope="col" class="px-4 py-3">Publised At</th>
                             <th scope="col" class="px-4 py-3">
                                 Actions
                             </th>
@@ -54,17 +55,18 @@
                     </thead>
                     <tbody>
                         @foreach ($works as $work)
-                            <tr class="border-b ">
+                            <tr class="border-b text-[10px] [&>*]:text-wrap">
                                 <th scope="row" class="px-4 py-3 font-medium text-dark-first whitespace-nowrap ">
-                                    #</th>
-                                <td class="px-4 py-3">{{ $work->title }}</td>
-                                <td class="px-4 py-3">{{ $work->slug }}</td>
-                                <td class="px-4 py-3 max-w-[12rem] truncate">{{ $work->category->name }}</td>
-                                <td class="px-4 py-3">{{ $work->thumbnail }}</td>
-                                <td class="px-4 py-3">{{ $work->expert }}</td>
-                                <td class="px-4 py-3">{{ $work->link }}</td>
-                                <td class="px-4 py-3">{{ $work->has_page }}</td>
-                                <td class="px-4 py-3">{{ $work->Description }}</td>
+                                    {{ $loop->iteration + ($works->currentPage() - 1) * $works->perPage() }} </th>
+                                <td class="w-[16px] px-4 py-3">{{ $work->title }}</td>
+                                <td class="w-[16px] px-4 py-3">{{ $work->slug }}</td>
+                                <td class="w-[8px] px-4 py-3 max-w-[12px] truncate">{{ $work->category->name }}</td>
+                                <td class="w-[24px] px-4 py-3">{{ $work->thumbnail }}</td>
+                                <td class="w-[32px] px-4 py-3">{{ $work->excerpt }}</td>
+                                <td class="w-[40px] px-4 py-3">{{ $work->link }}</td>
+                                <td class="w-[8px] px-4 py-3">{{ $work->has_page }}</td>
+                                <td class="min-w-[488px] px-4 py-3">{{ $work->description }}</td>
+                                <td class="w-[32px] px-4 py-3">{{ $work->published_at }}</td>
                                 <td class="px-4 py-3 flex gap-[16px] items-center justify-end">
                                     @if ($work->has_page)
                                         <a href="{{ route('dashboard.work', $work->slug) }}" class="w-fit">
@@ -95,10 +97,9 @@
                 </table>
             </div>
             @if ($works->hasPages())
-                {{ $works->links() }}>
+                {{ $works->links() }}
             @endif
         </div>
     </div>
 </section>
-<!-- End block -->
 </div>

@@ -46,7 +46,7 @@ class WorkController extends Controller
             $title =  User::where('username', $request->creator)->value('username'); //hanya ambil kolom username
         }
 
-
+        //Menampilkan halaman yang berisi semua project
         return view('pages.works.show', [
             'firstTitle' => $firstTitle,
             'title' =>$title,
@@ -60,29 +60,6 @@ class WorkController extends Controller
             'title' => count($user->work) . " Project By Creator " . $user->username,
             'show' => $user->work
         ]);
-    }
-
-    //Proses Generate Slug Unique
-    private function generateUniqueSlug(string $title): string{
-        $slug = Str::slug($title);
-        $count = Work::where('slug', 'LIKE', "{$slug}%")->count();
-
-        return $count ? "{$slug}-{$count}" : $slug;
-    }
-
-    public function store(Request $request){
-
-        //Untuk Mengvalidasi Data yang akan di masukkan ke dalam database, biasanya dimasukkan dari mengisi form
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'thumbnail' => 'nullable|file|mimes:jpg,jpeg,png,webp|max:2048',
-            'excerpt' => 'required|string',
-            'link' => 'nullable|url',
-            'user_ids' => 'required|array|min:1',
-        ]);
-
-        // Generate slug unik secara otomatis (Mengambil dari function generateUniqueSlug)
-        // $slug = $this->generateUniqueSlug($validated['title']);
     }
 
 }

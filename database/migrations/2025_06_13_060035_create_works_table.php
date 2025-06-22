@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('thumbnail')->nullable(); //Gambar thumbnail dari project
             $table->text('excerpt')->nullable(); //Ringkasan pendek
             $table->string('link')->nullable(); //Link menuju project yg ada diplatform lain (behance, dribbble, dll)
-            $table->boolean('has_page')->default(false); //Kondisi apakah project ini memiliki halaman detail atau tidak
+            $table->boolean('has_page'); //Kondisi apakah project ini memiliki halaman detail atau tidak
             $table->text('description')->nullable(); // deskripsi isi lengkap dari project 
             $table->timestamp('published_at')->nullable(); //Waktu kapan project di Upload
             $table->timestamps();

@@ -30,6 +30,7 @@ Route::get('/contact', function(){
 })->name('contact');
 
 Route::get('/dashboard', [DashboardWorkController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/dashboard', [DashboardWorkController::class, 'store'])->middleware(['auth', 'verified'])->name('dashboard.store');
 Route::get('/dashboard/create', [DashboardWorkController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.work.create');
 Route::get('/dashboard/{work:slug}', [DashboardWorkController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.work');
 

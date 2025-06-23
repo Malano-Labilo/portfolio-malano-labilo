@@ -21,10 +21,10 @@
 @endif
 
 {{-- Create Work Form --}}
-<form action="{{ route('dashboard') }}" method="POST" enctype="multipart/form-data"
+<form action="{{ route('dashboard.work.update', $work->slug) }}" method="POST" enctype="multipart/form-data"
     class="w-full py-[48px] px-[80px] flex flex-col items-center gap-[16px] ">
     @csrf
-
+    @method('PATCH')
     <div class="w-full max-w-[720px]">
         <label for="title"
             class="w-fit max-w-[720px] block mb-2 text-sm font-medium @error('title') text-red-blue @else text-dark-first @enderror">Title
@@ -32,7 +32,7 @@
         </label>
         <input id="title" name="title" placeholder="Type title..."
             class="w-full max-w-[720px] @error('title') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow"
-            autofocus value="{{ old('title') }}" />
+            autofocus value="{{ old('title') ?? $work->title }}" />
         @error('title')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
@@ -47,7 +47,7 @@
             class="w-full max-w-[720px] @error('category') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow">
             <option value="">Choose Category</option>
             @foreach (App\Models\Category::get() as $category)
-                <option value="{{ $category->id }}" @selected(old('category') == $category->id)> {{ $category->name }}</option>
+                <option value="{{ $category->id }}" @selected((old('category') ?? $category->id) == $category->id)> {{ $category->name }}</option>
             @endforeach
         </select>
         @error('category')
@@ -73,7 +73,7 @@
         </label>
         <input id="excerpt" name="excerpt" placeholder="Type excerpt..."
             class="w-full max-w-[720px] @error('excerpt') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow"
-            value="{{ old('excerpt') }}" />
+            value="{{ old('excerpt') ?? $work->excerpt }}" />
         @error('excerpt')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
@@ -86,7 +86,7 @@
         </label>
         <input id="link" name="link" placeholder="Type link..."
             class="w-full max-w-[720px] @error('link') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow"
-            value="{{ old('link') }}" />
+            value="{{ old('link') ?? $work->link }}" />
         @error('link')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
@@ -95,8 +95,8 @@
     <div class="w-full max-w-[720px]">
         <label for="" class=" @error('has_page') text-red-blue @else text-dark-first @enderror">Has Detail Page
             Or Not : </label><br>
-        <label><input type="radio" name="has_page" value="1" @checked(old('has_page') == '1')> Yes</label>
-        <label><input type="radio" name="has_page" value="0" @checked(old('has_page') == '0')> No</label>
+        <label><input type="radio" name="has_page" value="1" @checked((old('has_page') ?? $work->has_page) == '1')> Yes</label>
+        <label><input type="radio" name="has_page" value="0" @checked((old('has_page') ?? $work->has_page) == '0')> No</label>
         @error('has_page')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
@@ -107,7 +107,7 @@
             class=" @error('description') text-red-blue @else text-dark-first @enderror w-fit max-w-[720px] block mb-2 text-sm font-medium text-dark-first">Description
             : </label>
         <textarea id="description" name="description" placeholder="Type description..."
-            class="w-full max-w-[720px] @error('description') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow"> {{ old('description') }} </textarea>
+            class="w-full max-w-[720px] @error('description') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow"> {{ old('description') ?? $work->description }} </textarea>
         @error('description')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
@@ -121,7 +121,7 @@
                 <path clip-rule="evenodd" fill-rule="evenodd"
                     d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
             </svg>
-            Add New Project
+            Edit Project
         </button>
         <a href="{{ route('dashboard') }}" id="createProductModalButton" data-modal-target="createProductModal"
             data-modal-toggle="createProductModal"

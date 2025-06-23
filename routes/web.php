@@ -29,10 +29,15 @@ Route::get('/contact', function(){
     return view('pages.contact');
 })->name('contact');
 
-Route::get('/dashboard', [DashboardWorkController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-Route::post('/dashboard', [DashboardWorkController::class, 'store'])->middleware(['auth', 'verified'])->name('dashboard.store');
-Route::get('/dashboard/create', [DashboardWorkController::class, 'create'])->middleware(['auth', 'verified'])->name('dashboard.work.create');
-Route::get('/dashboard/{work:slug}', [DashboardWorkController::class, 'show'])->middleware(['auth', 'verified'])->name('dashboard.work');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardWorkController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard', [DashboardWorkController::class, 'store'])->name('dashboard.store');
+    Route::get('/dashboard/create', [DashboardWorkController::class, 'create'])->name('dashboard.work.create');
+    Route::delete('/dashboard/{work:slug}', [DashboardWorkController::class, 'destroy'])->name('dashboard.work.destroy');
+    Route::get('/dashboard/{work:slug}/edit', [DashboardWorkController::class, 'edit'])->name('dashboard.work.edit');
+    Route::patch('/dashboard/{work:slug}', [DashboardWorkController::class, 'update'])->name('dashboard.work.update');
+    Route::get('/dashboard/{work:slug}', [DashboardWorkController::class, 'show'])->name('dashboard.work');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

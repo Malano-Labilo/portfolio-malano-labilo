@@ -64,6 +64,14 @@
         @error('thumbnail')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
+
+        <div class="">
+            <div class="mt-2 flex items-center gap-x-3">
+                <img id="thumbnail-preview"
+                    src="{{ $work->thumbnail ? asset('storage/' . $work->thumbnail) : asset('img/default-thumbnail.jpg') }}"
+                    alt="{{ $work->title }}" class="w-full bg-gray-50 object-cover">
+            </div>
+        </div>
     </div>
 
     <div class="w-full max-w-[720px]">
@@ -130,3 +138,19 @@
         </a>
     </div>
 </form>
+
+<script>
+    const input = document.getElementById('thumbnail');
+    const previewPhoto = () => {
+        const file = input.files;
+        if (file) {
+            const fileReader = new FileReader();
+            const preview = document.getElementById('thumbnail-preview');
+            fileReader.onload = function(event) {
+                preview.setAttribute('src', event.target.result);
+            }
+            fileReader.readAsDataURL(file[0]);
+        }
+    }
+    input.addEventListener("change", previewPhoto);
+</script>

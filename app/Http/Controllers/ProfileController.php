@@ -27,15 +27,14 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $validatedData = $request->validated();
-
-        $request->user()->fill($request->validated());
+        $validatedData = $request->validated(); // Validasi data yang diterima dari request
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
         if($request->hasFile('avatar')) {
+            // dd($request->user()->avatar);
             if(!empty($request->user()->avatar)) {
                 // Hapus gambar lama jika ada
                 Storage::disk('public')->delete($request->user()->avatar);

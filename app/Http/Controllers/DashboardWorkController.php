@@ -6,6 +6,7 @@ use App\Models\Work;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class DashboardWorkController extends Controller
@@ -101,7 +102,7 @@ class DashboardWorkController extends Controller
     public function update(Request $request, Work $work)
     {
         //Validasi inputan form
-        Validator::make($request->all(), [
+        $data = $request->validate([
             'title' => 'required|max:255|unique:works,title,' . $work->id, // Validasi untuk title, harus diisi dan maksimal 255 karakter, dan harus unik di tabel works
             'category' => 'required|exists:categories,id', // Validasi untuk category, harus diisi dan harus ada di tabel categories
             'thumbnail' => 'required|image|mimes:jpg,jpeg,png|max:20480', // Validasi untuk thumbnail, harus berupa file gambar dengan ekstensi jpg, jpeg, atau png dan maksimal -+20MB
@@ -126,25 +127,38 @@ class DashboardWorkController extends Controller
             'link' => 'Tautan',
             'has_page' => 'Halaman',
             'description' => 'Deskripsi',
-        ])->validate();
+        ]);
 
+            
+        if($request->hasFile('thumbnail')) {
+            if($work->thumbnail) {
+                // Hapus gambar lama jika ada
+                Storage::disk('public')->delete($work->thumbnail);
+            }
+            $data['thumbnail'] = $request->file('thumbnail')->store('img/thumbnails', 'public'); // Mengambil file dari inputan form dengan name="thumbnail" dan menyimpannya di folder 'thumbnails' pada disk 'public'
+        }
 
         //Update data project
-        $work->update([
-            'title' => $request->input('title'), // Mengambil data dari inputan form dengan name="title"
-            'slug' =>  Str::slug($request->input('title')), // Mengambil data dari inputan form dengan name="title" dan mengubahnya menjadi slug
-            'user_id' => Auth::user()->id, // Mengambil ID user yang sedang login
-            'category_id' => $request->input('category'), // Mengambil data dari inputan form dengan name="category"
-            'thumbnail' => $request->file('thumbnail')->store('img/thumbnails', 'public'), // Mengambil file dari inputan form dengan name="thumbnail" dan menyimpannya di folder 'thumbnails' pada disk 'public'
-            'excerpt' => $request->input('excerpt'), // Mengambil data dari inputan form dengan name="excerpt"
-            'link' => $request->input('link'), // Mengambil data dari inputan form dengan name="link"
-            'has_page' => $request->boolean('has_page'), // Mengambil data dari inputan form dengan name="pages"
-            'description' => $request->input('description'), // Mengambil data dari inputan form dengan name="description"
-            'published_at' => now(), // Mengambil waktu saat ini
-        ]);
-        //Redirect ke halaman dashboard dengan pesan sukses
+        // $workUpdate = $work->update([
+        //     $validatedData['title'] => $request->input('title'), // Mengambil data dari inputan form dengan name="title"
+        //     $validatedData['slug'] =>  Str::slug($validatedData['title']), // Mengambil data dari inputan form dengan name="title" dan mengubahnya menjadi slug
+        //     $validatedData['user_id'] => Auth::user()->id, // Mengambil ID user yang sedang login
+        //     $validatedData['category_id'] => $request->input('category'), // Mengambil data dari inputan form dengan name="category"
+        //     // 'thumbnail' => $request->file('thumbnail')->store('img/thumbnails', 'public'), // Mengambil file dari inputan form dengan name="thumbnail" dan menyimpannya di folder 'thumbnails' pada disk 'public'
+        //     $validatedData['excerpt'] => $request->input('excerpt'), // Mengambil data dari inputan form dengan name="excerpt"
+        //     $validatedData['link'] => $request->input('link'), // Mengambil data dari inputan form dengan name="link"
+        //     $validatedData['has_page'] => $request->boolean('has_page'), // Mengambil data dari inputan form dengan name="pages"
+        //     $validatedData['description'] => $request->input('description'), // Mengambil data dari inputan form dengan name="description"
+        //     $validatedData['published_at'] => now(), // Mengambil waktu saat ini
+        // ]);
+    $data['slug'] = Str::slug($data['title']);
+    $data['user_id'] = Auth::id();          
+    $data['published_at'] = now();
+
+    // Update
+    $updated = $work->update($data);
         
-        return $work->update() ? redirect()->route('dashboard')->with(['success' => 'Project Edit successfully!']) : redirect()->route('dashboard')->with(['error' => 'Failed to Edit project!']);
+        return $updated ? redirect()->route('dashboard')->with(['success' => 'Project Edit successfully!']) : redirect()->route('dashboard')->with(['error' => 'Failed to Edit project!']);
     }
 
     /**

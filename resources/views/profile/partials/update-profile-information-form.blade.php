@@ -34,7 +34,8 @@
         <div class="col-span-full">
             <div class="">
                 <label for="avatar" class="block text-sm/6 font-medium text-gray-900">Avatar</label>
-                <input type="file" name="avatar" accept=" image/jpg, image/jpeg, image/png, image/webp"
+                <input id="avatar" type="file" name="avatar"
+                    accept=" image/jpg, image/jpeg, image/png, image/webp"
                     class="rounded-md  @error('avatar') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror px-2.5 py-1.5 text-sm font-semibold shadow-xs ring-1 ring-inset hover:bg-gray-50"></input>
             </div>
             @error('avatar')
@@ -42,7 +43,8 @@
             @enderror
             <div class="">
                 <div class="mt-2 flex items-center gap-x-3">
-                    <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('img/user-avatar.png') }}"
+                    <img id="avatar-preview"
+                        src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('img/user-avatar.png') }}"
                         alt="{{ $user->name }}" class="h-[88px] w-[88px] rounded-full bg-gray-50 object-cover">
                 </div>
             </div>
@@ -84,3 +86,19 @@
         </div>
     </form>
 </section>
+
+<script>
+    const input = document.getElementById('avatar');
+    const previewPhoto = () => {
+        const file = input.files;
+        if (file) {
+            const fileReader = new FileReader();
+            const preview = document.getElementById('avatar-preview');
+            fileReader.onload = function(event) {
+                preview.setAttribute('src', event.target.result);
+            }
+            fileReader.readAsDataURL(file[0]);
+        }
+    }
+    input.addEventListener("change", previewPhoto);
+</script>

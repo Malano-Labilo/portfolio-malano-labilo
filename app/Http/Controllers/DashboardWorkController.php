@@ -105,7 +105,7 @@ class DashboardWorkController extends Controller
         $data = $request->validate([
             'title' => 'required|max:255|unique:works,title,' . $work->id, // Validasi untuk title, harus diisi dan maksimal 255 karakter, dan harus unik di tabel works
             'category' => 'required|exists:categories,id', // Validasi untuk category, harus diisi dan harus ada di tabel categories
-            'thumbnail' => 'required|image|mimes:jpg,jpeg,png|max:20480', // Validasi untuk thumbnail, harus berupa file gambar dengan ekstensi jpg, jpeg, atau png dan maksimal -+20MB
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png|max:20480', // Validasi untuk thumbnail, harus berupa file gambar dengan ekstensi jpg, jpeg, atau png dan maksimal -+20MB
             'excerpt' => 'required|max:255', // Validasi untuk excerpt, harus diisi dan maksimal 255 karakter
             'link' => 'nullable|url', // Validasi untuk link, boleh kosong tapi jika diisi harus berupa URL yang valid
             'has_page' => 'required|boolean', // Validasi untuk has_page, harus diisi dan harus berupa boolean (true/false)
@@ -129,13 +129,16 @@ class DashboardWorkController extends Controller
             'description' => 'Deskripsi',
         ]);
 
-            
+            // Jika ada file baru, upload & hapus lama
         if($request->hasFile('thumbnail')) {
             if($work->thumbnail) {
                 // Hapus gambar lama jika ada
                 Storage::disk('public')->delete($work->thumbnail);
             }
             $data['thumbnail'] = $request->file('thumbnail')->store('img/thumbnails', 'public'); // Mengambil file dari inputan form dengan name="thumbnail" dan menyimpannya di folder 'thumbnails' pada disk 'public'
+        }else {
+            // Jika tidak ada file baru, tetap gunakan thumbnail lama
+            $data['thumbnail'] = $request->input('old_thumbnail');
         }
 
         //Update data project

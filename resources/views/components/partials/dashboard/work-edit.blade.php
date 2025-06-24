@@ -59,6 +59,7 @@
         <label for="thumbnail"
             class="w-fit max-w-[720px] block mb-2 text-sm font-medium @error('thumbnail') text-red-blue @else text-dark-first @enderror">Thumbnail
             : </label>
+        <input type="hidden" name="old_thumbnail" value="{{ $work->thumbnail }}"> {{-- Isi Thumbnail Sebelumnya --}}
         <input id="thumbnail" name="thumbnail" type="file" placeholder="Type thumbnail..." class="cursor-pointer"
             value="" />
         @error('thumbnail')

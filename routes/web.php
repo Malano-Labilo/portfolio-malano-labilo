@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/dashboard/{work:slug}', [DashboardWorkController::class, 'destroy'])->name('dashboard.work.destroy');
     Route::get('/dashboard/{work:slug}/edit', [DashboardWorkController::class, 'edit'])->name('dashboard.work.edit');
     Route::patch('/dashboard/{work:slug}', [DashboardWorkController::class, 'update'])->name('dashboard.work.update');
+    Route::post('/dashboard/{work:slug}/upload-thumbnail', [DashboardWorkController::class, 'uploadThumbnail'])->name('dashboard.work.upload-thumbnail');
     Route::get('/dashboard/{work:slug}', [DashboardWorkController::class, 'show'])->name('dashboard.work');
 });
 

@@ -19,10 +19,9 @@ FilePond.registerPlugin(FilePondPluginImageTransform); // Register the plugin "I
 FilePond.registerPlugin(FilePondPluginImageResize); // Register the plugin "Image resize"
 
 // Get a reference to the file input element
-const inputElement = document.querySelector("#avatar");
-
-// Create a FilePond instance
-const pond = FilePond.create(inputElement, {
+const inputElementAvatar = document.querySelector("#avatar");
+// Create a FilePond instance for the avatar input
+const pond = FilePond.create(inputElementAvatar, {
     acceptedFileTypes: ["image/jpg", "image/jpeg", "image/png", "image/webp"],
     maxFileSize: "20MB",
     imageResizeTargetWidth: 600, // Resize image to a maximum width of 600px
@@ -38,6 +37,33 @@ const pond = FilePond.create(inputElement, {
         onload: (response) => {
             const data = JSON.parse(response);
             document.getElementById("avatar-path").value = data.path;
+            return data.path; // kirim kembali path agar bisa dibaca saat submit form
+        },
+        onerror: (err) => {
+            console.error("Upload error:", err);
+        },
+    },
+});
+
+const inputElementThumbnail = document.querySelector("#thumbnail");
+const slug = inputElementThumbnail.dataset.slug; // Ambil slug dari data-slug
+// Create a FilePond instance for the thumbnail input
+const pondThumbnail = FilePond.create(inputElementThumbnail, {
+    acceptedFileTypes: ["image/jpg", "image/jpeg", "image/png", "image/webp"],
+    maxFileSize: "20MB",
+    imageResizeTargetWidth: 600, // Resize image to a maximum width of 600px
+    imageResizeMode: "contain", // Maintain aspect ratio while resizing
+    imageResizeUpscale: false, // Do not upscale images smaller than the target width
+    server: {
+        url: `upload-thumbnail`,
+        headers: {
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
+        },
+        onload: (response) => {
+            const data = JSON.parse(response);
+            document.getElementById("thumbnail-path").value = data.path;
             return data.path; // kirim kembali path agar bisa dibaca saat submit form
         },
         onerror: (err) => {

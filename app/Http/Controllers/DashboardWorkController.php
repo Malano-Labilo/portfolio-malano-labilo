@@ -105,7 +105,7 @@ class DashboardWorkController extends Controller
         $data = $request->validate([
             'title' => 'required|max:255|unique:works,title,' . $work->id, // Validasi untuk title, harus diisi dan maksimal 255 karakter, dan harus unik di tabel works
             'category' => 'required|exists:categories,id', // Validasi untuk category, harus diisi dan harus ada di tabel categories
-            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png|max:20480', // Validasi untuk thumbnail, harus berupa file gambar dengan ekstensi jpg, jpeg, atau png dan maksimal -+20MB
+            'thumbnail' => 'nullable|string', // Validasi untuk thumbnail, harus berupa file gambar dengan ekstensi jpg, jpeg, atau png dan maksimal -+20MB
             'excerpt' => 'required|max:255', // Validasi untuk excerpt, harus diisi dan maksimal 255 karakter
             'link' => 'nullable|url', // Validasi untuk link, boleh kosong tapi jika diisi harus berupa URL yang valid
             'has_page' => 'required|boolean', // Validasi untuk has_page, harus diisi dan harus berupa boolean (true/false)
@@ -129,31 +129,37 @@ class DashboardWorkController extends Controller
             'description' => 'Deskripsi',
         ]);
 
-            // Jika ada file baru, upload & hapus lama
-        if($request->hasFile('thumbnail')) {
-            if($work->thumbnail) {
-                // Hapus gambar lama jika ada
-                Storage::disk('public')->delete($work->thumbnail);
+            // Cek apakah request mengandung path thumbnail baru (hasil dari FilePond)
+        if($request->filled('thumbnail') && $request->thumbnail !== $work->thumbnail) {
+            $oldThumbnail = $work->thumbnail;
+            $tempPath = $request->input('thumbnail');
+            
+            $thumbnailRaw = $request->thumbnail;
+            $thumbnailPath = '';
+
+            if (is_string($thumbnailRaw) && Str::startsWith($thumbnailRaw, 'tmp/thumbnail')) {
+            // Langsung pakai kalau sudah path string
+            $thumbnailPath = $thumbnailRaw;
+            } elseif (is_string($thumbnailRaw) && Str::contains($thumbnailRaw, '{')) {
+            // Kalau isinya JSON, ambil path dari JSON
+            $decoded = json_decode($thumbnailRaw, true);
+            $thumbnailPath = $decoded['path'] ?? '';
             }
-            $data['thumbnail'] = $request->file('thumbnail')->store('img/thumbnails', 'public'); // Mengambil file dari inputan form dengan name="thumbnail" dan menyimpannya di folder 'thumbnails' pada disk 'public'
-        }else {
-            // Jika tidak ada file baru, tetap gunakan thumbnail lama
-            $data['thumbnail'] = $request->input('old_thumbnail');
+
+            // Validasi bahwa path berasal dari direktori tmp/thumbnail
+        if ($thumbnailPath && Str::startsWith($thumbnailPath, 'tmp/thumbnail')) {
+        $fileName = Str::after($thumbnailPath, 'tmp/thumbnail/');
+        Storage::disk('public')->move($thumbnailPath, 'img/thumbnails/' . $fileName);
+        $data['thumbnail'] = 'img/thumbnails/' . $fileName;
+            
+            // Hapus thumbnail lama jika ada
+            if ($oldThumbnail && Storage::disk('public')->exists($oldThumbnail)) {
+                Storage::disk('public')->delete($oldThumbnail);
+            }
         }
 
-        //Update data project
-        // $workUpdate = $work->update([
-        //     $validatedData['title'] => $request->input('title'), // Mengambil data dari inputan form dengan name="title"
-        //     $validatedData['slug'] =>  Str::slug($validatedData['title']), // Mengambil data dari inputan form dengan name="title" dan mengubahnya menjadi slug
-        //     $validatedData['user_id'] => Auth::user()->id, // Mengambil ID user yang sedang login
-        //     $validatedData['category_id'] => $request->input('category'), // Mengambil data dari inputan form dengan name="category"
-        //     // 'thumbnail' => $request->file('thumbnail')->store('img/thumbnails', 'public'), // Mengambil file dari inputan form dengan name="thumbnail" dan menyimpannya di folder 'thumbnails' pada disk 'public'
-        //     $validatedData['excerpt'] => $request->input('excerpt'), // Mengambil data dari inputan form dengan name="excerpt"
-        //     $validatedData['link'] => $request->input('link'), // Mengambil data dari inputan form dengan name="link"
-        //     $validatedData['has_page'] => $request->boolean('has_page'), // Mengambil data dari inputan form dengan name="pages"
-        //     $validatedData['description'] => $request->input('description'), // Mengambil data dari inputan form dengan name="description"
-        //     $validatedData['published_at'] => now(), // Mengambil waktu saat ini
-        // ]);
+        }
+
     $data['slug'] = Str::slug($data['title']);
     $data['user_id'] = Auth::id();          
     $data['published_at'] = now();
@@ -163,6 +169,16 @@ class DashboardWorkController extends Controller
         
         return $updated ? redirect()->route('dashboard')->with(['success' => 'Project Edit successfully!']) : redirect()->route('dashboard')->with(['error' => 'Failed to Edit project!']);
     }
+
+    public function uploadThumbnail(Request $request)
+    {
+        if($request->hasFile('thumbnail')){
+            $path = $request->file('thumbnail')->store('tmp/thumbnail', 'public'); //path img yang akan disimpan
+            return response()->json(['path' => $path]);
+        }
+        return response()->json(['error' => 'No file uploaded'], 400);
+    }
+
 
     /**
      * Remove the specified resource from storage.

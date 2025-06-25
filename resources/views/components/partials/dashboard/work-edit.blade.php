@@ -60,8 +60,9 @@
             class="w-fit max-w-[720px] block mb-2 text-sm font-medium @error('thumbnail') text-red-blue @else text-dark-first @enderror">Thumbnail
             : </label>
         <input type="hidden" name="old_thumbnail" value="{{ $work->thumbnail }}"> {{-- Isi Thumbnail Sebelumnya --}}
-        <input id="thumbnail" name="thumbnail" type="file" placeholder="Type thumbnail..." class="cursor-pointer"
-            value="" />
+        <input type="hidden" name="thumbnail" id="thumbnail-path">
+        <input id="thumbnail" name="thumbnail" type="file" data-slug="{{ $work->slug }}"
+            placeholder="Type thumbnail..." class="cursor-pointer" value="" />
         @error('thumbnail')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
@@ -140,18 +141,22 @@
     </div>
 </form>
 
-<script>
-    const input = document.getElementById('thumbnail');
-    const previewPhoto = () => {
-        const file = input.files;
-        if (file) {
-            const fileReader = new FileReader();
-            const preview = document.getElementById('thumbnail-preview');
-            fileReader.onload = function(event) {
-                preview.setAttribute('src', event.target.result);
+@push('scripts')
+    <script>
+        const input = document.getElementById('thumbnail');
+        const previewPhoto = () => {
+            const file = input.files;
+            if (file) {
+                const fileReader = new FileReader();
+                const preview = document.getElementById('thumbnail-preview');
+                fileReader.onload = function(event) {
+                    preview.setAttribute('src', event.target.result);
+                }
+                fileReader.readAsDataURL(file[0]);
             }
-            fileReader.readAsDataURL(file[0]);
         }
-    }
-    input.addEventListener("change", previewPhoto);
-</script>
+        input.addEventListener("change", previewPhoto);
+    </script>
+
+    @vite('resources/js/filepond.js')
+@endpush

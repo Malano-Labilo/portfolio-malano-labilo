@@ -34,16 +34,6 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
-        // if($request->hasFile('avatar')) {
-        //     // dd($request->user()->avatar);
-        //     if(!empty($request->user()->avatar)) {
-        //         // Hapus gambar lama jika ada
-        //         Storage::disk('public')->delete($request->user()->avatar);
-        //     }
-        //     $pathImg = $request->file('avatar')->store('img/avatar', 'public'); //path img yang akan disimpan
-        //     $validatedData['avatar'] = $pathImg; // Simpan path gambar ke dalam Avatar 
-        // }
-
         if($request->avatar){
             if(!empty($request->user()->avatar)) {
                 // Hapus gambar lama jika ada

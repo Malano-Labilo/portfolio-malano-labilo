@@ -14,7 +14,7 @@
 }
 
 /* untuk menambahkan border dengan warna acak di setiap elements */
-@layer utilities {
+/* @layer utilities {
     * {
         @apply border;
         border-color: hsl(calc(var(--i, 0) * 60), 80%, 60%);
@@ -38,7 +38,7 @@
     *:nth-child(6) {
         --i: 5;
     }
-}
+} */
 
 @theme {
     /* Punya Breeze */

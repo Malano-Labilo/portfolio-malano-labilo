@@ -22,15 +22,15 @@
             </button>
 
             <!-- Profile dropdown -->
-            <div class="relative ml-3 flex items-center">
+            <div class="w-fit relative ml-3 flex items-center">
                 @if (Auth::check())
                     <button type="button" @click="isOpen = !isOpen"
-                        class="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                        class="w-[48px] relative flex justify-center rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
                         id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">Open user menu</span>
-                        <img class="w-[40px] rounded-full"
-                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        <img class="w-[40px] h-[40px] rounded-full"
+                            src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('img/user-avatar.png') }}"
                             alt="{{ Auth::user()->username }}" />
                     </button>
                     <div x-show="isOpen"

@@ -27,8 +27,8 @@
                 @forelse ($show as $s)
                     <div class="card w-[296px] border-[2px] border-dark-first">
                         <div class="h-[280px] w-full">
-                            <img src="{{ $s->thumbnail }}" alt="Thumbnail"
-                                class="w-full h-full object-cover object-center" />
+                            <img src="{{ $s->thumbnail ? asset('storage/' . $s->thumbnail) : asset('img/default-thumbnail.jpg') }}"
+                                alt="{{ $s->title }}" class="w-full h-full object-cover object-center" />
                         </div>
                         <div class="w-full py-[24px] px-[12px] flex flex-col gap-[16px] bg-blue-plus">
                             <h3 class="text-[16px] font-[500] line-clamp-1">{{ $s->title }}</h3>

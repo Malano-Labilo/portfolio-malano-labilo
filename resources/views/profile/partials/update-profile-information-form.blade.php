@@ -13,7 +13,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6 ">
         @csrf
         @method('patch')
 
@@ -31,12 +31,13 @@
             <x-input-error class="mt-2" :messages="$errors->get('username')" />
         </div>
 
-        <div class="col-span-full">
+        <div class="">
             <div class="">
-                <label for="avatar" class="block text-sm/6 font-medium text-gray-900">Avatar</label>
+                <label for="avatar" class="text-sm/6 font-medium text-gray-900">Avatar</label>
+                <input type="hidden" name="avatar" id="avatar-path">
                 <input id="avatar" type="file" name="avatar"
                     accept=" image/jpg, image/jpeg, image/png, image/webp"
-                    class="rounded-md  @error('avatar') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror px-2.5 py-1.5 text-sm font-semibold shadow-xs ring-1 ring-inset hover:bg-gray-50"></input>
+                    class=" rounded-md  @error('avatar') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror px-2.5 py-1.5 text-sm font-semibold shadow-xs ring-1 ring-inset hover:bg-gray-50"></input>
             </div>
             @error('avatar')
                 <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
@@ -86,19 +87,21 @@
         </div>
     </form>
 </section>
-
-<script>
-    const input = document.getElementById('avatar');
-    const previewPhoto = () => {
-        const file = input.files;
-        if (file) {
-            const fileReader = new FileReader();
-            const preview = document.getElementById('avatar-preview');
-            fileReader.onload = function(event) {
-                preview.setAttribute('src', event.target.result);
+@push('scripts')
+    <script>
+        const input = document.getElementById('avatar');
+        const previewPhoto = () => {
+            const file = input.files;
+            if (file) {
+                const fileReader = new FileReader();
+                const preview = document.getElementById('avatar-preview');
+                fileReader.onload = function(event) {
+                    preview.setAttribute('src', event.target.result);
+                }
+                fileReader.readAsDataURL(file[0]);
             }
-            fileReader.readAsDataURL(file[0]);
         }
-    }
-    input.addEventListener("change", previewPhoto);
-</script>
+        input.addEventListener("change", previewPhoto);
+    </script>
+    @vite('resources/js/filepond.js')
+@endpush

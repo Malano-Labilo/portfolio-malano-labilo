@@ -7,8 +7,8 @@
                 @foreach ($works as $work)
                     <div class="card w-[296px]">
                         <div class="h-[280px] w-full">
-                            <img src="{{ $work->thumbnail }}" alt="Thumbnail"
-                                class="w-full h-full object-cover object-center" />
+                            <img src="{{ $work->thumbnail ? asset('storage/' . $work->thumbnail) : asset('img/default-thumbnail.jpg') }}"
+                                alt="Thumbnail" class="w-full h-full object-cover object-center" />
                         </div>
                         <div class="w-full py-[24px] px-[12px] flex flex-col gap-[16px] bg-blue-plus">
                             <h3 class="text-[16px] font-[500] line-clamp-1">{{ $work->title }}</h3>

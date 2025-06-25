@@ -34,7 +34,7 @@ class WorkController extends Controller
         // $work = Work::with('category')->latest()->first();
         //Nilai default dari title
         $title = 'All Projects';
-
+        $firstTitle = 'This Is';
         //Jika query string ?category=
         if($request->filled('category')){
             $firstTitle = 'Projects By Category';

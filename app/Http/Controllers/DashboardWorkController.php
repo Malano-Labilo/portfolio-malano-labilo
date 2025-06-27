@@ -40,11 +40,12 @@ class DashboardWorkController extends Controller
             'excerpt' => 'required|max:255', // Validasi untuk excerpt, harus diisi dan maksimal 255 karakter
             'link' => 'nullable|url', // Validasi untuk link, boleh kosong tapi jika diisi harus berupa URL yang valid
             'has_page' => 'required|boolean', // Validasi untuk has_page, harus diisi dan harus berupa boolean (true/false)
-            'description' => 'required', // Validasi untuk description, harus diisi
+            'description' => 'required|min:20', // Validasi untuk description, harus diisi
         ],[
             'required' => 'Kolom :attribute harus diisi.',
             'unique' => ':attribute sudah digunakan, silakan gunakan :attribute lain.',
             'max' => 'Kolom :attribute maksimal :max karakter.',
+            'min' => 'Kolom :attribute minimal :min karakter.',
             'exists' => 'Kategori yang dipilih tidak valid.',
             'image' => 'File yang diunggah harus berupa gambar.',
             'mimes' => 'File yang diunggah harus berupa gambar dengan ekstensi: :values.',
@@ -109,11 +110,12 @@ class DashboardWorkController extends Controller
             'excerpt' => 'required|max:255', // Validasi untuk excerpt, harus diisi dan maksimal 255 karakter
             'link' => 'nullable|url', // Validasi untuk link, boleh kosong tapi jika diisi harus berupa URL yang valid
             'has_page' => 'required|boolean', // Validasi untuk has_page, harus diisi dan harus berupa boolean (true/false)
-            'description' => 'required', // Validasi untuk description, harus diisi
+            'description' => 'required|min:20', // Validasi untuk description, harus diisi
         ],[
             'required' => 'Kolom :attribute harus diisi.',
             'unique' => 'Judul sudah digunakan, silakan gunakan judul lain.',
             'max' => 'Kolom :attribute maksimal :max karakter.',
+            'min' => 'Kolom :attribute minimal :min karakter.',
             'exists' => 'Kategori yang dipilih tidak valid.',
             'image' => 'File yang diunggah harus berupa gambar.',
             'mimes' => 'File yang diunggah harus berupa gambar dengan ekstensi: :values.',
@@ -164,6 +166,10 @@ class DashboardWorkController extends Controller
     $data['user_id'] = Auth::id();          
     $data['published_at'] = now();
 
+    if(!isset($data['thumbnail']) || empty($data['thumbnail'])) {
+        $data['thumbnail'] = $work->thumbnail; // Jika tidak ada thumbnail baru, gunakan thumbnail lama
+    }
+
     // Update
     $updated = $work->update($data);
         
@@ -185,6 +191,9 @@ class DashboardWorkController extends Controller
      */
     public function destroy(Work $work)
     {
+        if ($work->thumbnail && Storage::disk('public')->exists($work->thumbnail)) {
+            Storage::disk('public')->delete($work->thumbnail); // Hapus thumbnail jika ada
+        }
         return $work->delete() ? redirect()->route('dashboard')->with(['success' => 'Project deleted successfully!']) : redirect()->route('dashboard')->with(['error' => 'Failed to delete project!']);
     }
 }

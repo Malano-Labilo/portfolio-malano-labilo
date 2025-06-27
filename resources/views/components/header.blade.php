@@ -25,11 +25,11 @@
             <div class="w-fit relative ml-3 flex items-center">
                 @if (Auth::check())
                     <button type="button" @click="isOpen = !isOpen"
-                        class="w-[48px] relative flex justify-center rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+                        class="w-[48px] h-[48px] relative flex justify-center items-center rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
                         id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                         <span class="absolute -inset-1.5"></span>
                         <span class="sr-only">Open user menu</span>
-                        <img class="w-[40px] h-[40px] rounded-full"
+                        <img class="w-[40px] h-[40px] rounded-full object-center object-cover"
                             src="{{ Auth::user()->avatar ? asset('storage/' . Auth::user()->avatar) : asset('img/user-avatar.png') }}"
                             alt="{{ Auth::user()->username }}" />
                     </button>

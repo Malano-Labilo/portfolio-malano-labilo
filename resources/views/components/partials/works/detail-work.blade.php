@@ -17,7 +17,7 @@
             <div class="">{{ $work->created_at->diffForHumans() }}</div>
         </div>
         <article>
-            <p>{{ $work->description ?? 'No Description' }} </p>
+            <div>{!! $work->description ?? 'No Description' !!} </div>
         </article>
     </div>
 </section>

@@ -47,6 +47,7 @@ const pond = FilePond.create(inputElementAvatar, {
 
 const inputElementThumbnail = document.querySelector("#thumbnail");
 const slug = inputElementThumbnail.dataset.slug; // Ambil slug dari data-slug
+const submitButton = document.getElementById("work-submit-button"); // tombol submit
 // Create a FilePond instance for the thumbnail input
 const pondThumbnail = FilePond.create(inputElementThumbnail, {
     acceptedFileTypes: ["image/jpg", "image/jpeg", "image/png", "image/webp"],
@@ -64,10 +65,22 @@ const pondThumbnail = FilePond.create(inputElementThumbnail, {
         onload: (response) => {
             const data = JSON.parse(response);
             document.getElementById("thumbnail-path").value = data.path;
+
+            // ✅ Enable tombol submit setelah upload selesai
+            if (submitButton) submitButton.disabled = false;
             return data.path; // kirim kembali path agar bisa dibaca saat submit form
         },
         onerror: (err) => {
             console.error("Upload error:", err);
+            if (submitButton) submitButton.disabled = false;
         },
+    },
+    // 🔒 Disable tombol saat mulai upload
+    onaddfile: () => {
+        if (submitButton) submitButton.disabled = true;
+    },
+    // ✅ Enable tombol setelah upload selesai
+    onprocessfile: () => {
+        if (submitButton) submitButton.disabled = false;
     },
 });

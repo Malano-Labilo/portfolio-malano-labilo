@@ -21,7 +21,7 @@
 @endif
 
 {{-- Create Work Form --}}
-<form action="{{ route('dashboard') }}" method="POST" enctype="multipart/form-data"
+<form id="post-create-form" action="{{ route('dashboard') }}" method="POST" enctype="multipart/form-data"
     class="w-full py-[48px] px-[80px] flex flex-col items-center gap-[16px] ">
     @csrf
 
@@ -107,7 +107,12 @@
             class=" @error('description') text-red-blue @else text-dark-first @enderror w-fit max-w-[720px] block mb-2 text-sm font-medium text-dark-first">Description
             : </label>
         <textarea id="description" name="description" placeholder="Type description..."
-            class="w-full max-w-[720px] @error('description') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow"> {{ old('description') }} </textarea>
+            class="hidden w-full max-w-[720px] @error('description') bg-red-200 ring-red-300 focus:border-red-400 placeholder:text-red-400 text-red-700 border-red-200 hover:border-red-300 @else placeholder:text-slate-400 text-slate-700 focus:border-slate-400 hover:border-slate-300 border-slate-200 @enderror text-sm border-rounded-md px-3 py-2 transition duration-300 ease focus:outline-none shadow-sm focus:shadow"> {!! old('description') !!} </textarea>
+
+        <div id="quillDescriptionEditor" class="bg-white-first text-dark-first">
+            {!! old('description') !!}
+        </div>
+
         @error('description')
             <div class="text-red-500 text-sm mt-1">{{ $message }}</div>
         @enderror
@@ -130,3 +135,7 @@
         </a>
     </div>
 </form>
+
+@push('scripts')
+    @vite('resources/js/quill.js')
+@endpush

@@ -8,9 +8,6 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         User::factory()->create([
@@ -23,7 +20,7 @@ class DatabaseSeeder extends Seeder
         
         $this->call([
             CategorySeeder::class,
-            WorkSeeder::class,
+            // WorkSeeder::class,
         ]);
     }
 }

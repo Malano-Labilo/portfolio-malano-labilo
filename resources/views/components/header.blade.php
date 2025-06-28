@@ -5,15 +5,14 @@
         <a href="{{ route('home') }}" class="flex items-center uppercase font-[500] text-[28px]">Malano.</a>
         <div class="w-full flex justify-end gap-[8px] ">
             <nav role="navigation"
-                class="w-full sm:max-w-[444px] lg:max-w-[488px] hidden sm:flex justify-between items-center [&>*]:w-[72px] lg:[&>*]:w-[72px] [&>*]:text-center [&>*]:text-[16px] [&>*]:font-[500] [&>*]:capitalize [&>*]:hover:text-blue-plus [&>*]:hover:cursor-pointer [&>*]:hover:transition-all [&>*]:hover:duration-200 ">
+                class="w-full sm:max-w-[444px] lg:max-w-[488px] hidden sm:flex justify-evenly items-center [&>*]:w-[72px] lg:[&>*]:w-[72px] [&>*]:text-center [&>*]:text-[16px] [&>*]:font-[500] [&>*]:capitalize [&>*]:hover:text-blue-plus [&>*]:hover:cursor-pointer [&>*]:hover:transition-all [&>*]:hover:duration-200 ">
                 <a href="{{ route('home') }}"
                     class="{{ request()->routeIs('home') ? 'text-dark-first bg-white-first' : 'text-white-first bg-dark-first' }}">Home</a>
-                <a href="{{ route('about') }}"
-                    class="{{ request()->routeIs('about') ? 'text-dark-first bg-white-first' : 'text-white-first bg-dark-first' }}">About</a>
+                {{-- <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'text-dark-first bg-white-first' : 'text-white-first bg-dark-first' }}">About</a> --}}
                 <a href="{{ route('works') }}"
                     class="{{ request()->routeIs('works') ? 'text-dark-first bg-white-first' : 'text-white-first bg-dark-first' }}">Works</a>
-                <a href="{{ route('contact') }}"
-                    class="{{ request()->routeIs('contact') ? 'text-dark-first bg-white-first' : 'text-white-first bg-dark-first' }}">Contact</a>
+                {{-- <a href="{{ route('contact') }}"
+                    class="{{ request()->routeIs('contact') ? 'text-dark-first bg-white-first' : 'text-white-first bg-dark-first' }}">Contact</a> --}}
             </nav>
             {{-- burger menu --}}
             <button aria-label="Open menu" @click="open = !open" aria-label="Toggle navigation"
@@ -22,7 +21,7 @@
             </button>
 
             <!-- Profile dropdown -->
-            <div class="w-fit relative ml-3 flex items-center">
+            {{-- <div class="w-fit relative ml-3 flex items-center">
                 @if (Auth::check())
                     <button type="button" @click="isOpen = !isOpen"
                         class="w-[48px] h-[48px] relative flex justify-center items-center rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
@@ -51,7 +50,7 @@
                 @else
                     <a href="/login">Login</a> <span class="mx-[4px]"> | </span> <a href="/register">Register</a>
                 @endif
-            </div>
+            </div> --}}
         </div>
     </div>
     {{-- nav pada halaman mobile --}}
@@ -61,8 +60,8 @@
         x-transition:leave-end="opacity-0 translate-y-2"
         class="w-full absolute top-[64px] flex sm:hidden flex-col items-center bg-dark-first [&>*]:w-full [&>*]:py-[8px] [&>*]:text-center [&>*]:capitalize [&>*]:text-[16px] [&>*]:font-[500] [&>*]:text-white-first [&>*]:hover:bg-blue-second [&>*]:hover:text-blue-plus [&>*]:hover:cursor-pointer [&>*]:hover:transition-all [&>*]:hover:duration-200 ">
         <a href="{{ route('home') }}" @click="open = false">Home</a>
-        <a href="{{ route('about') }}" @click="open = false">About</a>
+        {{-- <a href="{{ route('about') }}" @click="open = false">About</a> --}}
         <a href="{{ route('works') }}" @click="open = false">Works</a>
-        <a href="{{ route('contact') }}" @click="open = false">Contact</a>
+        {{-- <a href="{{ route('contact') }}" @click="open = false">Contact</a> --}}
     </nav>
 </header>

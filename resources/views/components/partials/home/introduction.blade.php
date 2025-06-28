@@ -19,7 +19,7 @@
                 </p>
             </div>
         </div>
-        <div class=" w-full lg:w-[50%] h-full bg-[url('../images/intro-picture.png')] bg-cover bg-center bg-no-repeat ">
+        <div class=" w-full lg:w-[50%] h-full bg-[url('../img/intro-home.jpg')] bg-cover bg-center bg-no-repeat ">
             <div class="w-full h-full p-[24px] flex justify-center items-center  bg-white-first-70">
 
                 <div class="w-full max-w-[560px] flex lg:hidden flex-col gap-[48px] text-center lg:text-left">

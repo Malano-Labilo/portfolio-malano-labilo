@@ -10,7 +10,7 @@
             <div class="flex flex-col gap-[16px]">
                 <div class="flex justify-between items-center gap-[24px]">
                     <p class="question text-[20px] font-[500]">Lorem ipsum dolor sit amet consectetur?</p>
-                    <x-elements-icon name="arrow-right" />
+                    <x-elements-icon name="arrow-right" class="w-[32px]" />
                 </div>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae nesciunt vel, architecto id magni ex
                     numquam ullam ab blanditiis, possimus reprehenderit est quam dicta dolore iusto in dignissimos
@@ -18,7 +18,7 @@
             </div>
             <div class="flex justify-between items-center gap-[24px]">
                 <p class="">Lorem ipsum dolor sit amet consectetur ?</p>
-                <x-elements-icon name="arrow-right" />
+                <x-elements-icon name="arrow-right" class="w-[32px]" />
             </div>
         </div>
     </div>

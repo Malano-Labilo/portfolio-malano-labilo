@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\DashboardWorkController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Auth\Middleware\Authenticate;
 
 //Halaman Home
 Route::get('/', function () {
@@ -13,11 +15,11 @@ Route::get('/', function () {
 })->name('home');
 
 //Halaman About
-Route::get('/about', function(){
-    return view('pages.about',[
-        'title' => 'About',
-    ]);
-})->name('about');
+// Route::get('/about', function(){
+//     return view('pages.about',[
+//         'title' => 'About',
+//     ]);
+// })->name('about');
 
 Route::get('/works', [WorkController::class, 'index'])->name('works');
 
@@ -25,9 +27,14 @@ Route::get('/all-works', [WorkController::class, 'works'])->name('works.all');
 Route::get('/works/{work:slug}', [WorkController::class, 'work'])->name('works.work');
 
 //Halaman Contact
-Route::get('/contact', function(){
-    return view('pages.contact');
-})->name('contact');
+// Route::get('/contact', function(){
+//     return view('pages.contact',[
+//         'title' => 'Contact',
+//     ]);
+// })->name('contact');
+
+    Route::get(env('SECRET_LOGIN_PATH', 'login-dimension-admin'), [AuthenticatedSessionController::class, 'create'])->middleware(['guest', 'secret.login.access'])->name('login');
+        Route::post(env('SECRET_LOGIN_PATH', 'login-dimension-admin'), [AuthenticatedSessionController::class, 'store'])->middleware('guest')->name('login.store');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardWorkController::class, 'index'])->name('dashboard');

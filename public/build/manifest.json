@@ -1,0 +1,109 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-DFr2_qoR.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/fonts/aleo/aleo-v14-latin-100.woff2": {
+    "file": "assets/aleo-v14-latin-100-CdxT8PQ6.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-100.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-100italic.woff2": {
+    "file": "assets/aleo-v14-latin-100italic-BH15gsbn.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-100italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-200.woff2": {
+    "file": "assets/aleo-v14-latin-200-CLbTH6Rt.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-200.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-200italic.woff2": {
+    "file": "assets/aleo-v14-latin-200italic-9UWEQUzt.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-200italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-300.woff2": {
+    "file": "assets/aleo-v14-latin-300-B_tiQY0W.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-300.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-300italic.woff2": {
+    "file": "assets/aleo-v14-latin-300italic-AOPcVAoy.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-300italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-500.woff2": {
+    "file": "assets/aleo-v14-latin-500-Dxo-1gtC.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-500.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-500italic.woff2": {
+    "file": "assets/aleo-v14-latin-500italic-BU8pJ5Pf.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-500italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-600.woff2": {
+    "file": "assets/aleo-v14-latin-600-C6F0ZJb0.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-600.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-600italic.woff2": {
+    "file": "assets/aleo-v14-latin-600italic-Bmq1rqjm.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-600italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-700.woff2": {
+    "file": "assets/aleo-v14-latin-700-BDhXEXxs.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-700.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-700italic.woff2": {
+    "file": "assets/aleo-v14-latin-700italic-Ni1aXSJT.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-700italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-800.woff2": {
+    "file": "assets/aleo-v14-latin-800-x6vOZjj5.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-800.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-800italic.woff2": {
+    "file": "assets/aleo-v14-latin-800italic-BlD4v6t8.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-800italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-900.woff2": {
+    "file": "assets/aleo-v14-latin-900-Cv5_pjHF.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-900.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-900italic.woff2": {
+    "file": "assets/aleo-v14-latin-900italic-CjZ2q55M.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-900italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-italic.woff2": {
+    "file": "assets/aleo-v14-latin-italic-BekCuY3t.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-italic.woff2"
+  },
+  "resources/fonts/aleo/aleo-v14-latin-regular.woff2": {
+    "file": "assets/aleo-v14-latin-regular-DFHBUsfQ.woff2",
+    "src": "resources/fonts/aleo/aleo-v14-latin-regular.woff2"
+  },
+  "resources/fonts/space-grotesk/space-grotesk-v21-latin-300.woff2": {
+    "file": "assets/space-grotesk-v21-latin-300-D2JxK3UW.woff2",
+    "src": "resources/fonts/space-grotesk/space-grotesk-v21-latin-300.woff2"
+  },
+  "resources/fonts/space-grotesk/space-grotesk-v21-latin-500.woff2": {
+    "file": "assets/space-grotesk-v21-latin-500-KYfcXlvK.woff2",
+    "src": "resources/fonts/space-grotesk/space-grotesk-v21-latin-500.woff2"
+  },
+  "resources/fonts/space-grotesk/space-grotesk-v21-latin-600.woff2": {
+    "file": "assets/space-grotesk-v21-latin-600-0SbvWzVy.woff2",
+    "src": "resources/fonts/space-grotesk/space-grotesk-v21-latin-600.woff2"
+  },
+  "resources/fonts/space-grotesk/space-grotesk-v21-latin-700.woff2": {
+    "file": "assets/space-grotesk-v21-latin-700-B7Rq4K4l.woff2",
+    "src": "resources/fonts/space-grotesk/space-grotesk-v21-latin-700.woff2"
+  },
+  "resources/fonts/space-grotesk/space-grotesk-v21-latin-regular.woff2": {
+    "file": "assets/space-grotesk-v21-latin-regular-C_H9aji2.woff2",
+    "src": "resources/fonts/space-grotesk/space-grotesk-v21-latin-regular.woff2"
+  },
+  "resources/img/intro-home.jpg": {
+    "file": "assets/intro-home-E5vTZe9F.jpg",
+    "src": "resources/img/intro-home.jpg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DaBYqt0m.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  }
+}

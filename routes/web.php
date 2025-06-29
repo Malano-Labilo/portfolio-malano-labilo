@@ -9,10 +9,9 @@ use Illuminate\Auth\Middleware\Authenticate;
 
 //Halaman Home
 Route::get('/', function () {
-    return 'Laravel is Running on Railway!';
-    // return view('pages.home',[
-    //     'title' => 'Home',
-    // ]);
+    return view('pages.home',[
+        'title' => 'Home',
+    ]);
 })->name('home');
 
 //Halaman About

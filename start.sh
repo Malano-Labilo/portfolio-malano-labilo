@@ -1,7 +1,7 @@
 #!/bin/sh
 
-# Jalankan semua migrate dan seeding sebelum start
-php artisan migrate --force
+echo "📦 Running migrations..."
+php artisan migrate --force || true
 
-# Start Laravel dengan PHP built-in server
-php artisan serve --host=0.0.0.0 --port=8080
+echo "🚀 Starting Laravel server..."
+exec php artisan serve --host=0.0.0.0 --port=8080

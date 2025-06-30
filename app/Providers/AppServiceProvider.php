@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
@@ -21,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if(env('APP_ENV') === 'production') {
+            // Force HTTPS in production environment
+            URL::forceScheme('https');
+        }
         //Jika ada yang menggunakan lazy loading akan error
         Model::preventLazyLoading();
 

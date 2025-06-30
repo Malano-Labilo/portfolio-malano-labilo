@@ -14,6 +14,23 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::get('/debug-storage', function () {
+    $path = storage_path('app/public/thumbnails');
+    
+    if (!file_exists($path)) {
+        return '❌ Folder tidak ditemukan: ' . $path;
+    }
+
+    $files = scandir($path);
+
+    return response()->json([
+        'real_path' => $path,
+        'files_in_folder' => $files,
+        'is_linked' => file_exists(public_path('storage')),
+        'symlink_target' => public_path('storage'),
+    ]);
+});
+
 //Halaman About
 // Route::get('/about', function(){
 //     return view('pages.about',[

@@ -15,7 +15,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/debug-storage', function () {
-    $path = storage_path('/img/thumbnails');
+    $path = storage_path('public/img/thumbnails');
     
     if (!file_exists($path)) {
         return '❌ Folder tidak ditemukan: ' . $path;

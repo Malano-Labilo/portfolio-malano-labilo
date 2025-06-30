@@ -1,6 +1,6 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-DFr2_qoR.css",
+    "file": "assets/app-lFuHOLuN.css",
     "src": "resources/css/app.css",
     "isEntry": true
   },
@@ -105,5 +105,23 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/filepond.js": {
+    "file": "assets/filepond-BxVAWAHT.js",
+    "name": "filepond",
+    "src": "resources/js/filepond.js",
+    "isEntry": true,
+    "css": [
+      "assets/filepond-BuD46uBV.css"
+    ]
+  },
+  "resources/js/quill.js": {
+    "file": "assets/quill-61sU7n5T.js",
+    "name": "quill",
+    "src": "resources/js/quill.js",
+    "isEntry": true,
+    "css": [
+      "assets/quill-CK2ULYaS.css"
+    ]
   }
 }
